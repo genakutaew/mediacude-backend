@@ -1,0 +1,53 @@
+version: "3.3"
+
+services:
+  
+  mysql:
+    image: mysql:8.0.26
+    container_name: mediacube-api-mysql
+    working_dir: /app
+    volumes:
+      - .:/app
+      - mysql-volume:/var/lib/mysql
+    environment:
+      - MYSQL_PASSWORD=123123123
+      - MYSQL_ROOT_PASSWORD=123123123
+    ports:
+      - 9003:3306
+
+  nginx:
+    image: nginx:alpine
+    container_name: mediacube-api-nginx
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 9001:80
+
+  php-fpm:
+    build: ./docker/php-fpm
+    container_name: mediacube-api-php-fpm
+    environment:
+      - PHP_MEMORY_LIMIT=2048M
+    working_dir: /app
+    volumes:
+      - ./docker/php-fpm/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini      
+      - .:/app
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mediacube-api-phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mediacube-api-mysql
+    ports:
+      - 9002:80
+
+volumes:
+  mysql-volume:
+
+networks:
+  default:
+    external:
+      name: mediacube-network
