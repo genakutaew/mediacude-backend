@@ -32,6 +32,7 @@ class EmployeeController extends Controller
     {
         $employee->update($request->toArray());
         $employee->departments()->sync($request->input('departments_ids'));
+        $employee->load(['departments']);
         return response()->json([
             'status' => true,
             'employee' => $employee
