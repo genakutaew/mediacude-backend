@@ -19,7 +19,6 @@ class DepartmentController extends Controller
     public function store(DepartmentRequest $request)
     {
         $department = Department::create($request->toArray());
-        $department->load(['employee']);
         return response()->json([
             'status' => true,
             'department' => $department
@@ -29,7 +28,6 @@ class DepartmentController extends Controller
     public function update(Department $department, DepartmentRequest $request)
     {
         $department->update($request->toArray());
-        $department->load(['employee']);
         return response()->json([
             'status' => true,
             'department' => $department
