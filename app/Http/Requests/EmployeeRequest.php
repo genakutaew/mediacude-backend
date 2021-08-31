@@ -25,15 +25,15 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'departments_ids' => 'array|required',
-            'first_name' => 'string|required',
-            'middle_name' => 'string|required',
-            'last_name' => 'string|required',
+            'first_name' => 'required|string',
+            'middle_name' => 'required|string',
+            'last_name' => 'nullable|string',
             'gender' => [
-                'required',
+                'nullable',
                 Rule::in(['male', 'female'])
             ],
-            'salary' => 'numeric|required',
+            'salary' => 'nullable|numeric',
+            'departments_ids' => 'array|required'
         ];
     }
 
@@ -43,10 +43,9 @@ class EmployeeRequest extends FormRequest
             'departments_ids.required' => 'Поле \'Департамент\' обязательно для ввода',
             'departments_ids.array' => 'Поле \'Департамент\' должно быть массивом',
             'first_name.required' => 'Поле \'Имя\' обязательно для ввода',
+            'first_name.string' => 'Поле \'Имя\' должно быть текстовым',
             'middle_name.required' => 'Поле \'Фамилия\' обязательно для ввода',
-            'last_name.required' => 'Поле \'Отчество\' обязательно для ввода',
-            'gender.required' => 'Поле \'Пол\' обязательно для ввода',
-            'salary.required' => 'Поле \'Зарплата\' обязательно для ввода',
+            'middle_name.string' => 'Поле \'Фамилия\' должно быть текстовым',
             'salary.numeric' => 'Поле \'Зарплата\' должно быть числовым'
         ];
     }
