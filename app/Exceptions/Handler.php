@@ -40,7 +40,7 @@ class Handler extends ExceptionHandler
                 'error' => true,
                 'errors' => $exception->validator->errors()
             ];
-            return response()->json($response);
+            return response()->json($response, 400);
         });
     }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\CreateDepartmentRequest;
-use App\Http\Requests\UpdateDepartmentRequest;
+use App\Http\Requests\DepartmentRequest;
 use App\Models\Department;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +16,7 @@ class DepartmentController extends Controller
         ]);
     }
 
-    public function store(CreateDepartmentRequest $request)
+    public function store(DepartmentRequest $request)
     {
         $department = Department::create($request->toArray());
         return response()->json([
@@ -26,7 +25,7 @@ class DepartmentController extends Controller
         ]);
     }
 
-    public function update(Department $department, UpdateDepartmentRequest $request)
+    public function update(Department $department, DepartmentRequest $request)
     {
         $department->update($request->toArray());
         return response()->json([

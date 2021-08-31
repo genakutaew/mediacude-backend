@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateEmployeeRequest extends FormRequest
+class EmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class CreateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'department_id' => 'array|required',
+            'departments_ids' => 'array|required',
             'first_name' => 'string|required',
             'middle_name' => 'string|required',
             'last_name' => 'string|required',
@@ -40,8 +40,8 @@ class CreateEmployeeRequest extends FormRequest
     public function messages()
     {
         return [
-            'department_id.array' => 'Поле \'Департамент\' обязательно для ввода',
-            'department_id.required' => 'Поле \'Департамент\' должно быть числовым',
+            'departments_ids.required' => 'Поле \'Департамент\' обязательно для ввода',
+            'departments_ids.array' => 'Поле \'Департамент\' должно быть массивом',
             'first_name.required' => 'Поле \'Имя\' обязательно для ввода',
             'middle_name.required' => 'Поле \'Фамилия\' обязательно для ввода',
             'last_name.required' => 'Поле \'Отчество\' обязательно для ввода',

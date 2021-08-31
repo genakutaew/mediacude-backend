@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\CreateEmployeeRequest;
-use App\Http\Requests\UpdateEmployeeRequest;
+use App\Http\Requests\EmployeeRequest;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Http\Controllers\Controller;
@@ -18,21 +17,21 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function store(CreateEmployeeRequest $request)
+    public function store(EmployeeRequest $request)
     {
         $employee = Employee::create($request->toArray());
-        $employee->department()->attach($request->input('department_id'));
-
+        $employee->departments()->attach($request->input('departments_ids'));
+        $employee->load(['departments']);
         return response()->json([
             'status' => true,
             'employee' => $employee
         ]);
     }
 
-    public function update(Employee $employee, UpdateEmployeeRequest $request)
+    public function update(Employee $employee, EmployeeRequest $request)
     {
         $employee->update($request->toArray());
-        $employee->department()->detach()->attach($request->input('department_id'));
+        $employee->departments()->sync($request->input('departments_ids'));
         return response()->json([
             'status' => true,
             'employee' => $employee
